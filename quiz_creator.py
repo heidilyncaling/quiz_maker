@@ -16,7 +16,7 @@ PURPLE = (255, 0, 255)
 
 #font
 FONT = pygame.font.SysFont("Helvetica", 25)
-BIG_FONT = pygame.font.SysFont("Helovetica", 50)
+BIG_FONT = pygame.font.SysFont("Helvetica", 50)
 
 #sfx
 ding_sound = pygame.mixer.Sound("C:/Users/HANZ JOSEPH CALING/Downloads/sounds/ding.wav.mp3")
@@ -28,30 +28,60 @@ def draw_text(text, font, color, surface, x, y, center=True):
     rect = rendered.get_rect(center=(x,y)if center else(x,y))
     surface.blit(rendered,rect)
 
-running = True
-pygame.mixer.music.play(-1,0.0)
-while running:
-    screen.fill(PURPLE)
-    draw_text("Welcome to Quiz Creator Game!", BIG_FONT, WHITE, screen, WIDTH // 2, HEIGHT // 3)
-    draw_text("Click to Start!", FONT, WHITE, screen, WIDTH // 2, HEIGHT // 1.5)
+#Input question
+def get_input(prompt):
+    user_input = ''
+    active = True
+    while active:
+        screen.fill(PURPLE)
+        draw_text(prompt, FONT, WHITE, screen, WIDTH // 2, HEIGHT // 3)
+        draw_text(user_input + '|', FONT, WHITE, screen, WIDTH // 2, HEIGHT // 2)
+        pygame.display.flip()
 
-    pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    active = False
+                elif event.key == pygame.K_BACKSPACE:
+                    user_input = user_input[:-1]
+                else:
+                    user_input += event.unicode
+    return user_input.strip()
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            running = False
-
-pygame.quit()
-sys.exit()
-
-#Loop:
-    #Input question
-    #Input choices (a, b, c, d)
-    #Input the correct answer.
-    #Save in txt file.
-    #Ask if input another or end program
+#Input choices (a, b, c, d)
+#Input the correct answer.
+#Save in txt file.
+#Ask if input another or end program
 #If no, end loop.
 
-#Show ending message.
+def start_screen():
+    running = True
+    pygame.mixer.music.play(-1,0.0)
+    while running:
+        screen.fill(PURPLE)
+        draw_text("Welcome to Quiz Creator Game!", BIG_FONT, WHITE, screen, WIDTH // 2, HEIGHT // 3)
+        draw_text("Click to Start!", FONT, WHITE, screen, WIDTH // 2, HEIGHT // 1.5)
+        pygame.display.flip()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                ding_sound.play()  # 🔊 plays the ding sound
+                running = False
+
+def main():
+    start_screen()
+    question = get_input("Enter your question:")
+    print(question)
+
+    pygame.quit()
+    sys.exit()
+
+#Show ending message.    
+
+main()
