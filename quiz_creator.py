@@ -79,9 +79,23 @@ def main():
     question = get_input("Enter your question:")
     print(question)
 
+    option_A = get_input("A.")
+    option_B = get_input("B.")
+    option_C = get_input("C.")
+    option_D = get_input("D.")
+
+    valid_answer = ['A', 'B', 'C', 'D']
+    correct_answer = ''
+
+    while correct_answer not in valid_answer:
+        correct_answer = get_input("Enter answer A/B/C/D:"),upper()
+        if correct_answer not in valid_answer:
+            print("Please enter a/b/c/d ony.")
+    print(correct_answer)
+
     pygame.quit()
     sys.exit()
-
-#Show ending message.    
-
+    
 main()
+
+#Show ending message.
