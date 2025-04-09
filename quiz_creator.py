@@ -4,7 +4,6 @@ import sys
 
 #initialize pygame
 pygame.init()
-pygame.mixer.init()
 
 #screen set up
 WIDTH, HEIGHT = 800, 600
@@ -19,6 +18,10 @@ PURPLE = (255, 0, 255)
 FONT = pygame.font.SysFont("Helvetica", 25)
 BIG_FONT = pygame.font.SysFont("Helovetica", 50)
 
+#sfx
+ding_sound = pygame.mixer.Sound("C:/Users/HANZ JOSEPH CALING/Downloads/sounds/ding.wav.mp3")
+pygame.mixer.music.load("C:/Users/HANZ JOSEPH CALING/Downloads/sounds/from_the_start.mp3")
+
 #center font in screen
 def draw_text(text, font, color, surface, x, y, center=True):
     rendered = font.render(text, True, color)
@@ -26,6 +29,7 @@ def draw_text(text, font, color, surface, x, y, center=True):
     surface.blit(rendered,rect)
 
 running = True
+pygame.mixer.music.play(-1,0.0)
 while running:
     screen.fill(PURPLE)
     draw_text("Welcome to Quiz Creator Game!", BIG_FONT, WHITE, screen, WIDTH // 2, HEIGHT // 3)
