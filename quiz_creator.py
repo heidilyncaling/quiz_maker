@@ -1,6 +1,7 @@
 #Welcome notes
 import pygame
 import sys
+import os
 
 #initialize pygame
 pygame.init()
@@ -113,12 +114,32 @@ def main():
                 pygame.display.flip()
                 pygame.time.wait(1000)
 
+        #store inputs
+        question_text = f"Q: {question}\n"
+        question_text += f"a) {option_A}\n"
+        question_text += f"a) {option_B}\n"
+        question_text += f"a) {option_C}\n"
+        question_text += f"a) {option_D}\n"
+        question_text += f"Answer: {correct_answer}\n"
+        question_text += "-" * 50 + "\n"
+        questions_data.append(question_text)
+
+        pygame.time.wait(500)
+
+    #Save in txt file.
+    file_path = "quiz_data.txt"
+    with open(file_path, "w", encoding="utf-8") as file:
+        file.writelines(questions_data)
+
+    #Show ending message.
+    screen.fill(PURPLE)
+    draw_text("All inputs saved to quiz_data.txt", BIG_FONT, WHITE, screen, WIDTH // 2, HEIGHT // 3)
+    pygame.display.flip()
+    pygame.time.wait(1500)
+
+    os.startfile(file_path)
+
     pygame.quit()
     sys.exit()
     
 main()
-
-#Save in txt file.
-#Ask if input another or end program
-#If no, end loop.
-#Show ending message.
