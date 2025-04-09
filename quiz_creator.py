@@ -13,6 +13,7 @@ pygame.display.set_caption("QUIZ CREATOR GAME")
 #colors
 WHITE = (255, 255, 255)
 PURPLE = (255, 0, 255)
+DARK_PURPLE = (100, 0, 150)
 
 #font
 FONT = pygame.font.SysFont("Helvetica", 25)
@@ -28,7 +29,6 @@ def draw_text(text, font, color, surface, x, y, center=True):
     rect = rendered.get_rect(center=(x,y)if center else(x,y))
     surface.blit(rendered,rect)
 
-#Input question
 def get_input(prompt):
     user_input = ''
     active = True
@@ -51,11 +51,6 @@ def get_input(prompt):
                     user_input += event.unicode
     return user_input.strip()
 
-#Input choices (a, b, c, d)
-#Input the correct answer.
-#Save in txt file.
-#Ask if input another or end program
-#If no, end loop.
 
 def start_screen():
     running = True
@@ -74,28 +69,56 @@ def start_screen():
                 ding_sound.play()  # 🔊 plays the ding sound
                 running = False
 
+#Progress bar
+def draw_progress_bar(current, total):
+    bar_width = 400
+    bar_height = 30
+    progress = int((current/total)) * bar_width
+    pygame.draw.rect(screen, WHITE, [150, 400, progress, bar_height], 2)
+    pygame.draw.rect(screen, DARK_PURPLE, [150, 400, progress, bar_height])
+    percent = f"{int((current / total)*100)}%"
+    draw_text(f"question {current} of {total} | {percent} completed", FONT, WHITE, screen, WIDTH // 2, HEIGHT // 4)
+
 def main():
     start_screen()
-    question = get_input("Enter your question:")
-    print(question)
 
-    option_A = get_input("A.")
-    option_B = get_input("B.")
-    option_C = get_input("C.")
-    option_D = get_input("D.")
+    total_questions = int(get_input("How many questions will you input?"))
+    questions_data = []
+    for i in range(total_questions):
+        screen.fill(PURPLE)
+        draw_text((f"loading question of {i+1} of {total_questions}.."), FONT, WHITE, screen, WIDTH // 2, HEIGHT // 4)
+        pygame.display.flip()
+        pygame.time.wait(1000)
 
-    valid_answer = ['A', 'B', 'C', 'D']
-    correct_answer = ''
+        screen.fill(PURPLE)
+        draw_progress_bar(i+1, total_questions)
+        pygame.display.flip()
+        pygame.time.wait(3000)
 
-    while correct_answer not in valid_answer:
-        correct_answer = get_input("Enter answer A/B/C/D:"),upper()
-        if correct_answer not in valid_answer:
-            print("Please enter a/b/c/d ony.")
-    print(correct_answer)
+        #Input question & options
+        question = get_input("Enter your question:")
+        option_A = get_input("A.")
+        option_B = get_input("B.")
+        option_C = get_input("C.")
+        option_D = get_input("D.")
+
+        #Input the correct answer.
+        valid_answer = ['A', 'B', 'C', 'D']
+        correct_answer = ''
+
+        while correct_answer not in valid_answer:
+            correct_answer = get_input("Enter answer A/B/C/D:").upper()
+            if correct_answer not in valid_answer:
+                draw_text("Please enter a/b/c/d ony."), FONT, WHITE, screen, WIDTH//2, HEIGHT//2
+                pygame.display.flip()
+                pygame.time.wait(1000)
 
     pygame.quit()
     sys.exit()
     
 main()
 
+#Save in txt file.
+#Ask if input another or end program
+#If no, end loop.
 #Show ending message.
