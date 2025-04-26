@@ -98,10 +98,10 @@ def main():
 
         #Input question & options
         question = get_input("Enter your question:")
-        option_A = get_input("A.")
-        option_B = get_input("B.")
-        option_C = get_input("C.")
-        option_D = get_input("D.")
+        option_a = get_input("A.")
+        option_b = get_input("B.")
+        option_c = get_input("C.")
+        option_d = get_input("D.")
 
         #Input the correct answer.
         valid_answer = ['A', 'B', 'C', 'D']
