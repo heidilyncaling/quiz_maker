@@ -2,20 +2,6 @@ import os
 import random
 
 #Start
-#set file path
-def main():
-    default_path = "quiz_data.txt"
-    file_path = default_path
-
-    if not os.path.isfile(file_path):
-        print("File not found.")
-        file_path = input("Enter full path").strip()
-        if not os.path.isfile(file_path):
-            print("No file found.")
-            return
-
-if __name__ == "__main__":
-    main()
 
 # Load the questions from the provided file.
 def load_questions(file_path):
@@ -50,13 +36,13 @@ def load_questions(file_path):
 
 #return a list of questions.
     for block in blocks: 
-        lines = block.strip().splitline()
+        lines = block.strip().splitlines()
         if len(lines) >= 6:
             question_text = lines[0][3:].strip()
             options = {
-                "A": lines [1][3:].strip()
-                "B": lines [2][3:].strip()
-                "C": lines [3][3:].strip()
+                "A": lines [1][3:].strip(),
+                "B": lines [2][3:].strip(),
+                "C": lines [3][3:].strip(),
                 "D": lines [4][3:].strip()
             }
             answer_line = lines [5].split(":")
@@ -80,19 +66,20 @@ def run_quiz(questions):
     random.shuffle(questions)
     score = 0
 
-    for idx, q in wnumerate(questions, 1):
+    for idx, q in enumerate(questions, 1):
         print (f"\nQuestion {idx}: {q['questions']}")
         for key in["A", "B", "C", "D"]:
             print (f"{key}.{q['options'][key]}")
         
         while True:
-            user_answer = input("A/B/C/D or exit").strip().upper()
-                if user_answer == "EXIT":
-                    print("\n Exiting. Thanks four playing!")
-                    print (f"Your score: {score}/{idk - 1}")
-                    return
-                if user_answer in ["A", "B", "C", "D"]:
-                    break
+            user_answer = input("A/B/C/D OR EXIT:").strip().upper()
+            if user_answer == "EXIT":
+                print("\n Exiting. Thanks four playing!")
+                print (f"Your score: {score}/{idk - 1}")
+                return
+            if user_answer in ["A", "B", "C", "D"]:
+                break
+            print("invalid input. a,b,c,d or exity only.")
 
         if user_answer == q["answer"]:
             print("correct")
@@ -101,18 +88,26 @@ def run_quiz(questions):
             correct_option = q["answer"]
             correct_answer = q["options"][correct_option]
             print (f"wrong. answer: {correct_option}: {correct_answer}")    
-
+            
+# After the quiz is finished, print a thank-you message for playing.
     print("\n Thanks four playing!")
-    print (f"Your score: {score}/{idk - 1}")
-                
-    
-#    - Shuffle the list of  questions to make the quiz random.
-#    - For each question in the shuffled list, display the question and choices (A, B, C, D).
-#    - Ask the user to input their answer (A, B, C, D, or 'exit' to quit).
-#    - Check if the user's answer is correct:
-#      - If correct, display " Correct!".
-#      - If incorrect, display " Incorrect!" and show the correct answer.
-#    - If the user types 'exit', stop the quiz.
-#    - If the answer is invalid, prompt the user again.
-# 5. After the quiz is finished, print a thank-you message for playing.
-# 6. End the program.
+    print (f"Your score: {score}/{idx - 1}")
+
+def main():
+    default_path = "quiz_data.txt"
+    file_path = default_path
+
+    if not os.path.isfile(file_path):
+        print("File not found.")
+        file_path = input("Enter full path").strip()
+        if not os.path.isfile(file_path):
+            print("No file found.")
+            return
+    questions = load_questions(file_path)
+    if not questions:
+        print("no valid questions")
+        return
+    run_quiz(questions)
+
+if __name__ == "__main__":
+    main()
