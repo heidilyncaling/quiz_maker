@@ -1,4 +1,5 @@
 import os
+import random
 
 #Start
 #set file path
@@ -68,7 +69,43 @@ def load_questions(file_path):
                 })
     return questions
 
-# 4. In the run_quiz() function:
+# run_quiz() function
+def run_quiz(questions):
+    """
+    Run the quiz by presenting each questions to the user.
+
+    Args:
+        questions(list):  A list of question dictionaries
+    """
+    random.shuffle(questions)
+    score = 0
+
+    for idx, q in wnumerate(questions, 1):
+        print (f"\nQuestion {idx}: {q['questions']}")
+        for key in["A", "B", "C", "D"]:
+            print (f"{key}.{q['options'][key]}")
+        
+        while True:
+            user_answer = input("A/B/C/D or exit").strip().upper()
+                if user_answer == "EXIT":
+                    print("\n Exiting. Thanks four playing!")
+                    print (f"Your score: {score}/{idk - 1}")
+                    return
+                if user_answer in ["A", "B", "C", "D"]:
+                    break
+
+        if user_answer == q["answer"]:
+            print("correct")
+            score += 1
+        else:
+            correct_option = q["answer"]
+            correct_answer = q["options"][correct_option]
+            print (f"wrong. answer: {correct_option}: {correct_answer}")    
+
+    print("\n Thanks four playing!")
+    print (f"Your score: {score}/{idk - 1}")
+                
+    
 #    - Shuffle the list of  questions to make the quiz random.
 #    - For each question in the shuffled list, display the question and choices (A, B, C, D).
 #    - Ask the user to input their answer (A, B, C, D, or 'exit' to quit).
