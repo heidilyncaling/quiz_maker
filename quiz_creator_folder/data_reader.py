@@ -28,7 +28,7 @@ def load_questions(file_path):
         with open(file_path, "r", encoding="utf-8") as file:
             content = file.read().strip()
     except FileNotFoundError:
-        print("dile not found")
+        print("file not found")
         return []
 
     blocks = content.split("-" * 50)
@@ -67,7 +67,7 @@ def run_quiz(questions):
     score = 0
 
     for idx, q in enumerate(questions, 1):
-        print (f"\nQuestion {idx}: {q['questions']}")
+        print(f"\nQuestion {idx}: {q['questions']}")
         for key in["A", "B", "C", "D"]:
             print (f"{key}.{q['options'][key]}")
         
@@ -75,11 +75,11 @@ def run_quiz(questions):
             user_answer = input("A/B/C/D OR EXIT:").strip().upper()
             if user_answer == "EXIT":
                 print("\n Exiting. Thanks four playing!")
-                print (f"Your score: {score}/{idk - 1}")
+                print(f"Your score: {score}/{idk - 1}")
                 return
             if user_answer in ["A", "B", "C", "D"]:
                 break
-            print("invalid input. a,b,c,d or exity only.")
+            print("invalid input. a,b,c,d or exit only.")
 
         if user_answer == q["answer"]:
             print("correct")
