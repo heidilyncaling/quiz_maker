@@ -116,10 +116,10 @@ def main():
 
         #store inputs
         question_text = f"Q: {question}\n"
-        question_text += f"a) {option_A}\n"
-        question_text += f"a) {option_B}\n"
-        question_text += f"a) {option_C}\n"
-        question_text += f"a) {option_D}\n"
+        question_text += f"a) {option_a}\n"
+        question_text += f"a) {option_b}\n"
+        question_text += f"a) {option_c}\n"
+        question_text += f"a) {option_d}\n"
         question_text += f"Answer: {correct_answer}\n"
         question_text += "-" * 50 + "\n"
         questions_data.append(question_text)
