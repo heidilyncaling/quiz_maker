@@ -1,13 +1,20 @@
+import os
+
 # Start
 def main():
-    pass
+    default_path = "quiz_data.txt"
+    file_path = default_path
+
+    if not os.path.isfile(file_path):
+        print("File not found.")
+        file_path = input("Enter full path").strip()
+        if not os.path.isfile(file_path):
+            print("No file found.")
+            return
 
 if __name__ == "__main__":
     main()
 
-# 2. In the main function:
-#    - Check if the file exists in the current directory.
-#    - If not, ask the user to provide the full path to the quiz file.
 # 3. Load the questions from the provided file using the load_questions() function.
 #    - If the file can't be found or is empty, display an error message and stop the program.
 #    - If the file is loaded correctly, return a list of questions.
